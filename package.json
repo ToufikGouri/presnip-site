@@ -1,0 +1,35 @@
+{
+  "name": "presnip-site",
+  "description": "Landing, privacy and contact pages for the Presnip browser extension.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build && node scripts/postbuild.mjs",
+    "preview": "serve build/client --listen 4173",
+    "typecheck": "react-router typegen && tsc",
+    "format": "prettier --write app",
+    "format:check": "prettier --check app",
+    "check": "npm run typecheck && npm run format:check"
+  },
+  "dependencies": {
+    "isbot": "^5",
+    "lucide-react": "^1.72.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.1"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^8.5.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "serve": "^14.2.7",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.8"
+  }
+}
