@@ -2,6 +2,7 @@ import { Bug, Lightbulb, Mail, MessageCircleQuestion } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
+import { spotlightMove } from "~/components/motion-bits";
 import { ProsePage } from "~/components/prose-page";
 import { buttonClass } from "~/components/ui";
 import { PRODUCT_NAME, SUPPORT_EMAIL, SUPPORT_MAILTO } from "~/const";
@@ -25,7 +26,10 @@ function Reason({
     children: ReactNode;
 }) {
     return (
-        <div className="bg-card rounded-xl border p-5">
+        <div
+            onPointerMove={spotlightMove}
+            className="glow-card bg-card rounded-xl border p-5"
+        >
             <div className="bg-primary-soft text-primary-soft-foreground flex size-9 items-center justify-center rounded-lg">
                 {icon}
             </div>

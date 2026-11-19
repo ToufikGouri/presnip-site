@@ -60,6 +60,38 @@ export const DEMO_SNIPPETS: DemoSnippet[] = [
     },
 ];
 
+// The scenes the hero demo plays in a loop. "query" is what gets typed after the trigger,
+// and it must be the start of one DEMO_SNIPPETS shortcut. "prefix" is text already in the field.
+export interface DemoScene {
+    id: "email" | "chat" | "form";
+    label: string;
+    title: string;
+    prefix: string;
+    query: string;
+}
+
+export const DEMO_SCENES: DemoScene[] = [
+    {
+        id: "email",
+        label: "Email",
+        title: "New message",
+        prefix: "Hi,\n\n",
+        query: "la",
+    },
+    { id: "chat", label: "Chat", title: "Team chat", prefix: "", query: "th" },
+    {
+        id: "form",
+        label: "Form",
+        title: "Support request",
+        prefix: "",
+        query: "he",
+    },
+];
+
+// The last words of the hero headline, typed and deleted in turn. The first one is what
+// the prerendered HTML, screen readers and reduced-motion visitors get.
+export const HERO_WORDS = ["anywhere", "in emails", "in chats", "in forms"];
+
 // Matches the extension's KEY_HINTS (core/expansion/key-hints.ts)
 export const KEY_HINTS = [
     { keys: ["↑↓"], label: "Navigate" },

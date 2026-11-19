@@ -66,7 +66,8 @@ export function ListHeader({ label, count }: { label: string; count: number }) {
     );
 }
 
-export function KeyHintsBar() {
+// pressedKey: draw that key held down, e.g. "Enter" while the demo inserts
+export function KeyHintsBar({ pressedKey }: { pressedKey?: string | null }) {
     return (
         <div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 border-t px-3 py-2 text-[11px]">
             {KEY_HINTS.map((hint) => (
@@ -75,7 +76,9 @@ export function KeyHintsBar() {
                     className="inline-flex items-center gap-1"
                 >
                     {hint.keys.map((key) => (
-                        <KeyCap key={key}>{key}</KeyCap>
+                        <KeyCap key={key} pressed={key === pressedKey}>
+                            {key}
+                        </KeyCap>
                     ))}
                     <span className="ml-0.5">{hint.label}</span>
                 </span>

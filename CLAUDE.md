@@ -38,6 +38,14 @@ vercel.json        static output from build/client, clean URLs, no trailing slas
 - Store buttons read from `STORES` in `const.ts`: `url: null` shows "Soon". Fill in the URLs when the listings go live.
 - `buttonClass` has no class-merging helper, so don't pass a class that fights a base one (`px-0`, `hidden`).
   Use the `"icon"` size, or wrap the button in an element that does the hiding.
+- **Motion** (`motion/react`) does the animation; `MotionConfig reducedMotion="user"` in the layout honors reduced motion.
+  Reusable pieces are in `components/motion-bits.tsx` (Reveal, RevealGroup/RevealItem, spotlightMove for
+  `.glow-card`, AnimatedCheck). Anything that starts hidden must carry `data-reveal`, so the `<noscript>` rule in
+  `root.tsx` can show it without JS. Don't animate on first load in ways that hide prerendered content.
+- Motion writes an inline `transform` on elements it animates, which beats CSS `transform` rules. For CSS hover
+  effects on those elements use the separate `translate` / `scale` properties.
+- Decorative motion (cursor glow, floating keys, demo autoplay, cycling word, sheen) must stay off for reduced
+  motion and on touch screens where it says so.
 - Route modules export only route things (`meta`, `default`, and so on). Put shared data in `const.ts` or a component.
 - With `ssr: false` there's no runtime server: no `action` or `headers` exports.
 - Theme: `.dark` on `<html>`, set before paint by the inline script in `root.tsx`. The choice is in localStorage

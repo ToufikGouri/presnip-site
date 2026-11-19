@@ -1,6 +1,5 @@
 import {
     ChevronDown,
-    Check,
     Download,
     FileUp,
     Keyboard,
@@ -21,6 +20,17 @@ import {
     PaletteMockup,
     TypedListMockup,
 } from "~/components/mockups";
+import { motion } from "motion/react";
+
+import { CyclingWord, FloatingKeys } from "~/components/hero-effects";
+import {
+    AnimatedCheck,
+    Reveal,
+    RevealGroup,
+    RevealItem,
+    spotlightMove,
+} from "~/components/motion-bits";
+import { Steps, type Step } from "~/components/steps";
 import { TypingDemo } from "~/components/typing-demo";
 import {
     buttonClass,
@@ -73,10 +83,7 @@ function StoreButton({ store }: { store: Store }) {
     }
     return (
         <span
-            className={buttonClass(
-                "outline",
-                "hover:bg-card cursor-default opacity-80",
-            )}
+            className={buttonClass("outline", "hover:bg-card opacity-80")}
             aria-disabled="true"
         >
             {label}
@@ -95,13 +102,14 @@ function Hero() {
                 aria-hidden
                 className="bg-primary/15 pointer-events-none absolute inset-x-0 -top-40 -z-10 mx-auto h-[480px] max-w-3xl rounded-full blur-3xl"
             />
+            <FloatingKeys />
             <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-2 lg:gap-16">
                 <div className="text-center lg:text-left">
                     <Eyebrow>
                         Browser extension for Chrome, Edge and Firefox
                     </Eyebrow>
                     <h1 className="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-                        Type it once. Insert it anywhere.
+                        Type it once. Insert it <CyclingWord />
                     </h1>
                     <p className="text-muted-foreground mx-auto mt-6 max-w-xl text-lg text-pretty lg:mx-0">
                         Save the text you write again and again. Then type{" "}
@@ -138,7 +146,11 @@ function WayCard({
     picture: ReactNode;
 }) {
     return (
-        <article className="bg-card flex flex-col rounded-xl border p-6">
+        <RevealItem
+            as="article"
+            onPointerMove={spotlightMove}
+            className="glow-card bg-card flex flex-col rounded-xl border p-6"
+        >
             <div className="bg-primary-soft text-primary-soft-foreground flex size-10 items-center justify-center rounded-lg">
                 {icon}
             </div>
@@ -149,7 +161,7 @@ function WayCard({
             <div className="mt-6" aria-hidden>
                 {picture}
             </div>
-        </article>
+        </RevealItem>
     );
 }
 
@@ -162,7 +174,7 @@ function ThreeWays() {
                     title="Use whichever fits the moment"
                     lead="Type it, search for it, or manage everything on one page."
                 />
-                <div className="mt-12 grid gap-6 md:grid-cols-3">
+                <RevealGroup className="mt-12 grid gap-6 md:grid-cols-3">
                     <WayCard
                         icon={<Keyboard className="size-5" aria-hidden />}
                         title="Type the trigger"
@@ -190,14 +202,14 @@ function ThreeWays() {
                         Create, edit, sort and favorite snippets. Import and
                         export them, change your trigger, and pick a theme.
                     </WayCard>
-                </div>
+                </RevealGroup>
             </Container>
         </section>
     );
 }
 
 function HowItWorks() {
-    const steps = [
+    const steps: Step[] = [
         {
             title: "Save a snippet",
             body: "Give it a title, the text, and a short shortcut of your own.",
@@ -229,21 +241,7 @@ function HowItWorks() {
                     eyebrow="How it works"
                     title="Three steps, then muscle memory"
                 />
-                <ol className="mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-3">
-                    {steps.map((step, i) => (
-                        <li key={step.title} className="flex gap-4">
-                            <span className="bg-primary text-primary-foreground flex size-8 shrink-0 items-center justify-center rounded-full font-mono text-sm font-semibold">
-                                {i + 1}
-                            </span>
-                            <div>
-                                <h3 className="font-semibold">{step.title}</h3>
-                                <p className="text-muted-foreground mt-1 text-sm">
-                                    {step.body}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
-                </ol>
+                <Steps steps={steps} />
             </Container>
         </section>
     );
@@ -259,9 +257,33 @@ function Privacy() {
     return (
         <section className="bg-card/40 border-y py-20 sm:py-24">
             <Container className="grid items-center gap-10 lg:grid-cols-2">
-                <div>
-                    <div className="bg-primary-soft text-primary-soft-foreground flex size-12 items-center justify-center rounded-xl">
-                        <ShieldCheck className="size-6" aria-hidden />
+                <Reveal>
+                    {/* The shield pulses once, with a ring that spreads out, when it comes into view */}
+                    <div className="relative size-12">
+                        <motion.span
+                            aria-hidden
+                            className="border-primary absolute inset-0 rounded-xl border-2"
+                            initial={{ opacity: 0, scale: 1 }}
+                            whileInView={{
+                                opacity: [0, 0.7, 0],
+                                scale: [1, 1, 1.6],
+                            }}
+                            viewport={{ once: true }}
+                            transition={{
+                                duration: 1.1,
+                                delay: 0.5,
+                                ease: "easeOut",
+                            }}
+                        />
+                        <motion.div
+                            className="bg-primary-soft text-primary-soft-foreground relative flex size-12 items-center justify-center rounded-xl"
+                            initial={{ scale: 1 }}
+                            whileInView={{ scale: [1, 1.12, 1] }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.5 }}
+                        >
+                            <ShieldCheck className="size-6" aria-hidden />
+                        </motion.div>
                     </div>
                     <h2 className="mt-6 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                         Private by design, not by promise
@@ -276,21 +298,24 @@ function Privacy() {
                     >
                         Read the privacy policy
                     </Link>
-                </div>
-                <ul className="grid gap-3">
-                    {points.map((point) => (
-                        <li
+                </Reveal>
+                <RevealGroup as="ul" className="grid gap-3">
+                    {points.map((point, i) => (
+                        <RevealItem
+                            as="li"
                             key={point}
-                            className="bg-card flex items-start gap-3 rounded-lg border p-4"
+                            onPointerMove={spotlightMove}
+                            className="glow-card bg-card flex items-start gap-3 rounded-lg border p-4"
                         >
-                            <Check
+                            {/* each check draws in just after its row arrives */}
+                            <AnimatedCheck
+                                delay={0.35 + i * 0.09}
                                 className="text-primary mt-0.5 size-5 shrink-0"
-                                aria-hidden
                             />
                             <span>{point}</span>
-                        </li>
+                        </RevealItem>
                     ))}
-                </ul>
+                </RevealGroup>
             </Container>
         </section>
     );
@@ -341,9 +366,9 @@ function Details() {
                     eyebrow="The details"
                     title="Small things, done carefully"
                 />
-                <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                <RevealGroup className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     {items.map((item) => (
-                        <div key={item.title} className="flex gap-4">
+                        <RevealItem key={item.title} className="flex gap-4">
                             <div className="bg-primary-soft text-primary-soft-foreground flex size-10 shrink-0 items-center justify-center rounded-lg">
                                 {item.icon}
                             </div>
@@ -353,9 +378,9 @@ function Details() {
                                     {item.body}
                                 </p>
                             </div>
-                        </div>
+                        </RevealItem>
                     ))}
-                </div>
+                </RevealGroup>
             </Container>
         </section>
     );
@@ -410,10 +435,10 @@ function Faq() {
         <section id="faq" className="bg-card/40 border-t py-20 sm:py-24">
             <Container className="max-w-3xl">
                 <SectionHeading eyebrow="FAQ" title="Questions, answered" />
-                <div className="bg-card mt-10 divide-y rounded-xl border">
+                <Reveal className="bg-card mt-10 divide-y rounded-xl border">
                     {FAQ.map((item) => (
                         <details key={item.q} className="group px-5 py-4">
-                            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium [&::-webkit-details-marker]:hidden">
+                            <summary className="flex list-none items-center justify-between gap-4 font-medium [&::-webkit-details-marker]:hidden">
                                 {item.q}
                                 <ChevronDown
                                     className="text-muted-foreground size-4 shrink-0 transition-transform group-open:rotate-180"
@@ -425,7 +450,7 @@ function Faq() {
                             </div>
                         </details>
                     ))}
-                </div>
+                </Reveal>
             </Container>
         </section>
     );
@@ -435,7 +460,7 @@ function Install() {
     return (
         <section id="install" className="py-20 sm:py-24">
             <Container>
-                <div className="bg-primary text-primary-foreground relative overflow-hidden rounded-2xl px-6 py-14 text-center sm:px-12">
+                <Reveal className="sheen bg-primary text-primary-foreground relative overflow-hidden rounded-2xl px-6 py-14 text-center sm:px-12">
                     <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
                         Stop retyping the same things
                     </h2>
@@ -467,7 +492,7 @@ function Install() {
                             </li>
                         ))}
                     </ul>
-                </div>
+                </Reveal>
             </Container>
         </section>
     );

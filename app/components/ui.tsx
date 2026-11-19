@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { Reveal } from "./motion-bits";
+
 // Joins class names and drops the empty ones
 export function cx(...parts: Array<string | false | null | undefined>) {
     return parts.filter(Boolean).join(" ");
@@ -43,9 +45,23 @@ export function buttonClass(
 }
 
 // A keyboard key, same look as the hints in the palette and typing list
-export function KeyCap({ children }: { children: ReactNode }) {
+// "pressed" shows it held down (used by the demo when it presses Enter for you)
+export function KeyCap({
+    children,
+    pressed = false,
+}: {
+    children: ReactNode;
+    pressed?: boolean;
+}) {
     return (
-        <kbd className="bg-card text-muted-foreground inline-flex h-6 min-w-6 items-center justify-center rounded-md border border-b-2 px-1.5 font-mono text-[11px] leading-none font-medium">
+        <kbd
+            className={cx(
+                "inline-flex h-6 min-w-6 items-center justify-center rounded-md border px-1.5 font-mono text-[11px] leading-none font-medium transition-all duration-150",
+                pressed
+                    ? "border-primary bg-primary text-primary-foreground translate-y-px border-b"
+                    : "bg-card text-muted-foreground border-b-2",
+            )}
+        >
             {children}
         </kbd>
     );
@@ -107,8 +123,9 @@ export function SectionHeading({
     lead?: ReactNode;
     id?: string;
 }) {
+    // Section titles rise into view as you scroll to them
     return (
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal className="mx-auto max-w-2xl text-center">
             {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
             <h2
                 id={id}
@@ -121,6 +138,6 @@ export function SectionHeading({
                     {lead}
                 </p>
             )}
-        </div>
+        </Reveal>
     );
 }

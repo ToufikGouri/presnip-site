@@ -33,6 +33,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     content="width=device-width, initial-scale=1"
                 />
                 <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+                {/* Scroll reveals start at opacity 0 in the HTML. Without JS they'd never
+                    appear, so show them as-is. */}
+                <noscript>
+                    <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+                </noscript>
                 <Meta />
                 <Links />
             </head>
