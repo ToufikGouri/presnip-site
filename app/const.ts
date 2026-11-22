@@ -31,7 +31,12 @@ export const STORES: Store[] = [
         note: "Also Brave, Opera and Vivaldi",
         url: null,
     },
-    { id: "edge", name: "Edge", note: "Microsoft Edge Add-ons", url: null },
+    {
+        id: "edge",
+        name: "Edge",
+        note: "Microsoft Edge Add-ons",
+        url: "https://microsoftedge.microsoft.com/addons/detail/presnip/cblmmlpipfpaoainmfafofmakedagcli",
+    },
     { id: "firefox", name: "Firefox", note: "Firefox 128 or newer", url: null },
 ];
 
