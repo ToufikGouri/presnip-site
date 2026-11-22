@@ -100,10 +100,10 @@ function Hero() {
             {/* soft brand glow behind the hero */}
             <div
                 aria-hidden
-                className="bg-primary/15 pointer-events-none absolute inset-x-0 -top-40 -z-10 mx-auto h-[480px] max-w-3xl rounded-full blur-3xl"
+                className="bg-primary/15 pointer-events-none absolute inset-x-0 -top-40 -z-10 mx-auto h-120 max-w-3xl rounded-full blur-3xl"
             />
             <FloatingKeys />
-            <Container className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-2 lg:gap-16">
+            <Container className="grid grid-cols-1 items-center gap-12 py-16 sm:py-24 lg:grid-cols-2 lg:gap-16">
                 <div className="text-center lg:text-left">
                     <Eyebrow>
                         Browser extension for Chrome, Edge and Firefox
@@ -174,7 +174,7 @@ function ThreeWays() {
                     title="Use whichever fits the moment"
                     lead="Type it, search for it, or manage everything on one page."
                 />
-                <RevealGroup className="mt-12 grid gap-6 md:grid-cols-3">
+                <RevealGroup className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
                     <WayCard
                         icon={<Keyboard className="size-5" aria-hidden />}
                         title="Type the trigger"
@@ -256,7 +256,7 @@ function Privacy() {
     ];
     return (
         <section className="bg-card/40 border-y py-20 sm:py-24">
-            <Container className="grid items-center gap-10 lg:grid-cols-2">
+            <Container className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
                 <Reveal>
                     {/* The shield pulses once, with a ring that spreads out, when it comes into view */}
                     <div className="relative size-12">
@@ -299,7 +299,7 @@ function Privacy() {
                         Read the privacy policy
                     </Link>
                 </Reveal>
-                <RevealGroup as="ul" className="grid gap-3">
+                <RevealGroup as="ul" className="grid grid-cols-1 gap-3">
                     {points.map((point, i) => (
                         <RevealItem
                             as="li"
@@ -366,7 +366,7 @@ function Details() {
                     eyebrow="The details"
                     title="Small things, done carefully"
                 />
-                <RevealGroup className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                <RevealGroup className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                     {items.map((item) => (
                         <RevealItem key={item.title} className="flex gap-4">
                             <div className="bg-primary-soft text-primary-soft-foreground flex size-10 shrink-0 items-center justify-center rounded-lg">
@@ -468,7 +468,7 @@ function Install() {
                         Presnip is on its way to the Chrome Web Store, Edge
                         Add-ons and Firefox Add-ons.
                     </p>
-                    <ul className="mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+                    <ul className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
                         {STORES.map((store) => (
                             <li
                                 key={store.id}

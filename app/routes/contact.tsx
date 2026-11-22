@@ -59,7 +59,7 @@ export default function Contact() {
                 </a>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <Reason
                     icon={<Bug className="size-4" aria-hidden />}
                     title="Report a bug"

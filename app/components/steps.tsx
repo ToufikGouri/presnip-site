@@ -42,7 +42,7 @@ export function Steps({ steps }: { steps: Step[] }) {
     return (
         <ol
             ref={ref}
-            className="relative mx-auto mt-12 grid max-w-5xl gap-8 md:grid-cols-3"
+            className="relative mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3"
         >
             {/* Horizontal line on wide screens, from the first number's center to the last.
                 The right end: one column width (minus the number's half) from the edge. */}
