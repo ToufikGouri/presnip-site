@@ -29,7 +29,7 @@ export const STORES: Store[] = [
         id: "chrome",
         name: "Chrome",
         note: "Also Brave, Opera and Vivaldi",
-        url: null,
+        url: "https://chromewebstore.google.com/detail/presnip/mjpclhnbpjfadfahakcbcafnnmipldha",
     },
     {
         id: "edge",
@@ -37,7 +37,12 @@ export const STORES: Store[] = [
         note: "Microsoft Edge Add-ons",
         url: "https://microsoftedge.microsoft.com/addons/detail/presnip/cblmmlpipfpaoainmfafofmakedagcli",
     },
-    { id: "firefox", name: "Firefox", note: "Firefox 128 or newer", url: null },
+    {
+        id: "firefox",
+        name: "Firefox",
+        note: "Firefox 128 or newer",
+        url: "https://addons.mozilla.org/firefox/addon/presnip/",
+    },
 ];
 
 // The snippets in the home page's typing demo. They live only in memory on this page.
