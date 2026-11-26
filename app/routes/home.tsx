@@ -35,6 +35,7 @@ import { TypingDemo } from "~/components/typing-demo";
 import {
     buttonClass,
     Container,
+    cx,
     Eyebrow,
     KeyCap,
     KeyCombo,
@@ -75,9 +76,15 @@ function StoreButton({ store }: { store: Store }) {
     const label = `Add to ${store.name}`;
     if (store.url) {
         return (
-            <a href={store.url} className={buttonClass("primary")}>
+            <a
+                href={store.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClass("primary")}
+            >
                 <Download className="size-4" aria-hidden />
                 {label}
+                <span className="sr-only"> (opens in a new tab)</span>
             </a>
         );
     }
@@ -465,35 +472,58 @@ function Install() {
                         Stop retyping the same things
                     </h2>
                     <p className="text-primary-foreground/80 mx-auto mt-4 max-w-xl text-pretty">
-                        Presnip is on its way to the Chrome Web Store, Edge
-                        Add-ons and Firefox Add-ons.
+                        Free on the Chrome Web Store, Edge Add-ons and Firefox
+                        Add-ons.
                     </p>
                     <ul className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
                         {STORES.map((store) => (
-                            <li
-                                key={store.id}
-                                className="bg-primary-foreground/10 rounded-lg px-4 py-3 text-left"
-                            >
-                                <div className="font-semibold">
-                                    {store.name}
-                                </div>
-                                <div className="text-primary-foreground/75 text-sm">
-                                    {store.url ? (
-                                        <a
-                                            href={store.url}
-                                            className="underline"
-                                        >
-                                            Add to {store.name}
-                                        </a>
-                                    ) : (
-                                        `Coming soon · ${store.note}`
-                                    )}
-                                </div>
+                            <li key={store.id}>
+                                <StoreCard store={store} />
                             </li>
                         ))}
                     </ul>
                 </Reveal>
             </Container>
         </section>
+    );
+}
+
+// The closing section's version of StoreButton: same icon and "Add to …" label,
+// plus the store's note underneath. The whole card is the link.
+function StoreCard({ store }: { store: Store }) {
+    const label = `Add to ${store.name}`;
+    const inner = (
+        <>
+            <span className="flex items-center gap-2 font-semibold">
+                <Download className="size-4 shrink-0" aria-hidden />
+                {label}
+            </span>
+            <span className="text-primary-foreground/75 mt-0.5 block text-sm">
+                {store.url ? store.note : `Coming soon · ${store.note}`}
+            </span>
+        </>
+    );
+    const card =
+        "block h-full rounded-lg bg-primary-foreground/10 px-4 py-3 text-left";
+    if (!store.url) {
+        return (
+            <span className={cx(card, "opacity-80")} aria-disabled="true">
+                {inner}
+            </span>
+        );
+    }
+    return (
+        <a
+            href={store.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cx(
+                card,
+                "hover:bg-primary-foreground/20 focus-visible:outline-primary-foreground transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
+            )}
+        >
+            {inner}
+            <span className="sr-only"> (opens in a new tab)</span>
+        </a>
     );
 }

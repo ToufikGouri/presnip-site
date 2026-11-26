@@ -45,6 +45,7 @@ export function Steps({ steps }: { steps: Step[] }) {
             className="relative mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3"
         >
             {/* Horizontal line on wide screens, from the first number's center to the last.
+                The numbers sit above their text there, so the line runs clear of the headings.
                 The right end: one column width (minus the number's half) from the edge. */}
             <div
                 aria-hidden
@@ -70,7 +71,10 @@ export function Steps({ steps }: { steps: Step[] }) {
             {steps.map((step, i) => {
                 const on = i < lit;
                 return (
-                    <li key={step.title} className="relative flex gap-4">
+                    <li
+                        key={step.title}
+                        className="relative flex gap-4 md:flex-col md:gap-4"
+                    >
                         <motion.span
                             animate={{ scale: on ? [1, 1.18, 1] : 1 }}
                             transition={{ duration: 0.35 }}
